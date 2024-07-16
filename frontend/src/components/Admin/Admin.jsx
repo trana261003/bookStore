@@ -1,55 +1,70 @@
+
+
 import React, { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-
-
 
 const Admin = () => {
   const [open, setOpen] = useState(true);
   return (
-    <div className=" flex w-full space-x-0 px-4 ">
-      <div className="flex flex-col w-full ">
-        <div className="flex  text-3xl font-bold ml-6 mt-6">
+    <div className="flex w-full space-x-0 px-4">
+      <div className="flex flex-col w-full">
+        <div className="flex text-3xl font-bold ml-6 mt-6">
           <h1> Admin Dashboard for Managing Book Inventory</h1>
         </div>
-        <div className="flex flex-col md:flex-row  w-full">
-          <div className="ml-6 mt-6 w-full md:w-4/12  ">
+        <div className="flex flex-col md:flex-row w-full">
+          <div className="ml-6 mt-6 w-full md:w-4/12">
             <div>
               <h1 className="text-black text-3xl font-bold">Stats</h1>
             </div>
             <div className="mt-4">
               <div className="bg-green-300 h-32 w-96 rounded-xl">
-                <div className="text-2xl py-3 font-semibold ml-4">Welcome Admin,</div>
-                <div className=" px-7">
-                  <button className="bg-white px-5 rounded-md font-semibold py-1">Start Tracking</button>
+                <div className="text-2xl py-3 font-semibold ml-4">
+                  Welcome Admin,
+                </div>
+                <div className="px-7">
+                  <button className="bg-white px-5 rounded-md font-semibold py-1">
+                    Start Tracking
+                  </button>
                 </div>
               </div>
             </div>
             <div className="mt-4 flex">
-              <div className=" bg-yellow-200 h-32 w-44 rounded-xl">
-                <div className="mx-auto flex items-center justify-center text-4xl font-semibold mt-8"> 20</div>
-                <div className=" flex justify-center mt-2 font-medium text-lg"> Tasks Finished</div>
+              <div className="bg-yellow-200 h-32 w-44 rounded-xl">
+                <div className="mx-auto flex items-center justify-center text-4xl font-semibold mt-8">
+                  20
+                </div>
+                <div className="flex justify-center mt-2 font-medium text-lg">
+                  Tasks Finished
+                </div>
               </div>
-              <div className=" bg-yellow-200 h-32 w-44 rounded-xl ml-8">
-              <div className="mx-auto flex items-center justify-center text-4xl font-semibold mt-8"> 5.5</div>
-              <div className=" flex justify-center mt-2 font-medium text-lg"> Tracked Hours</div>
+              <div className="bg-yellow-200 h-32 w-44 rounded-xl ml-8">
+                <div className="mx-auto flex items-center justify-center text-4xl font-semibold mt-8">
+                  5.5
+                </div>
+                <div className="flex justify-center mt-2 font-medium text-lg">
+                  Tracked Hours
+                </div>
               </div>
             </div>
             <div className="mt-4">
-              <div className=" bg-purple-400 h-32 w-96 rounded-xl">
-                <div className="text-2xl flex ml-4 py-2 font-semibold"> Your daily plan</div>
-                <div className="mt-3 ml-4 font-semibold text-lg">5 of 8 Completed</div>
+              <div className="bg-purple-400 h-32 w-96 rounded-xl">
+                <div className="text-2xl flex ml-4 py-2 font-semibold">
+                  Your daily plan
+                </div>
+                <div className="mt-3 ml-4 font-semibold text-lg">
+                  5 of 8 Completed
+                </div>
               </div>
-             
             </div>
           </div>
           <div className="flex flex-col w-full md:w-7/12 mt-6 ml-6 md:ml-20">
             <div>
-              <h1 className="text-black text-3xl font-bold">your task today</h1>
+              <h1 className="text-black text-3xl font-bold">Your task today</h1>
             </div>
             <div className="w-[550px] h-auto border-2 mt-4 rounded-xl flex flex-col border-gray-400">
               <div className="flex items-center px-6 mt-2 justify-between">
-                <div className=" text-base text-gray-500 ">Number 10</div>
-                <div className=" text-base text-gray-500 ">4h</div>
+                <div className="text-base text-gray-500">Number 10</div>
+                <div className="text-base text-gray-500">4h</div>
               </div>
               <div className="px-5 text-2xl font-bold mt-2">
                 Blog and social posts
@@ -59,24 +74,23 @@ const Admin = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="black"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
-                  class="size-5 mt-3.5 ml-4 text-white"
+                  className="size-5 mt-3.5 ml-4 text-white"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
                   />
                 </svg>
-
                 <h3 className="mt-3 ml-1 text-gray-500">Deadline is today</h3>
               </div>
             </div>
             <div className="w-[550px] h-auto border-2 mt-4 rounded-xl flex flex-col border-gray-400">
               <div className="flex items-center px-6 mt-2 justify-between">
-                <div className=" text-base text-gray-500 ">Number 9</div>
-                <div className=" text-base text-gray-500 ">7d</div>
+                <div className="text-base text-gray-500">Number 9</div>
+                <div className="text-base text-gray-500">7d</div>
               </div>
               <div className="px-5 text-2xl font-bold mt-2">
                 New campaign review
@@ -86,30 +100,26 @@ const Admin = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   fill="black"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  strokeWidth="1.5"
                   stroke="currentColor"
-                  class="size-5 mt-3.5 ml-4 text-white"
+                  className="size-5 mt-3.5 ml-4 text-white"
                 >
                   <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z"
                   />
                 </svg>
-
                 <h3 className="mt-3 ml-1 text-gray-500">New Feedback</h3>
               </div>
             </div>
             <div className="w-[550px] h-auto border-2 mt-4 rounded-xl flex flex-col border-gray-400 mb-6">
-              <div className="flex items-center px-6 mt-2 justify-between ">
-                <div className=" text-base text-gray-500 ">Team Webwizards App</div>
-                {/* <div className=" text-base text-gray-500 ">4h</div> */}
+              <div className="flex items-center px-6 mt-2 justify-between">
+                <div className="text-base text-gray-500">Team Webwizards App</div>
               </div>
               <div className="px-5 text-2xl font-bold mt-2 mb-5">
                 Cross Platform and Questionnaire
               </div>
-              
-              
             </div>
           </div>
         </div>
@@ -119,19 +129,3 @@ const Admin = () => {
 };
 
 export default Admin;
-
-{
-  /* <div>
-                <h1 className="text-black text-3xl font-bold">Stats</h1>
-            </div>
-            <div className="mt-10">
-                <div className="bg-green-300 h-32 w-96 rounded-xl"></div>
-            </div>
-            <div className="mt-4 flex">
-                <div className=" bg-yellow-200 h-32 w-44 rounded-xl"></div>
-                <div className=" bg-yellow-200 h-32 w-44 rounded-xl ml-8"></div>
-            </div>
-            <div className="mt-4">
-                <div className=" bg-purple-200 h-32 w-96 rounded-xl"></div>
-            </div> */
-}

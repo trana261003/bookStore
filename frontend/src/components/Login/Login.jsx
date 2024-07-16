@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
-  const [responseMessage, setResponseMessage] = useState('');
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
@@ -38,7 +39,6 @@ const Login = () => {
       const data = await response.json();
 
       if (data.success) {
-        setResponseMessage(data.message);
         setFormData({
           email: '',
           password: ''
@@ -54,23 +54,38 @@ const Login = () => {
 
         // Check the user's role and navigate accordingly
         if (role === 'admin') {
-          navigate('/admin');
+          navigate('/admin', { state: { message: 'Admin successfully logged in!' } });
         } else if (role === 'user') {
-          navigate('/home');
+          navigate('/home', { state: { message: 'User successfully logged in!' } });
         } else {
           setError('Unknown role.');
         }
       } else {
         setError(data.message);
+        toast.error(data.message);
       }
     } catch (error) {
       console.error('Error logging in user:', error);
-      setError('Network error. Please try again later.');
+      // setError('Network error. Please try again later.');
+      toast.error('Please enter correct details');
     }
   };
 
   return (
     <div className="flex flex-wrap flex-col md:flex-row w-full mt-10 justify-center items-center">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        toastClassName="bg-gray-800 text-white"
+        bodyClassName="text-center"
+      />
       <div>
         <div className="flex flex-wrap flex-col shadow-lg h-auto rounded-xl border-gray-400 border-2 items-start shadow-gray-500 px-12 py-6">
           <div className="flex flex-wrap flex-col w-full justify-center items-center mb-6">
@@ -90,7 +105,6 @@ const Login = () => {
             </div>
             <div className="flex flex-wrap flex-col w-full mt-7">
               <button type="submit" className="bg-black text-white px-6 py-2 rounded-md font-bold hover:opacity-85 bg-gradient-to-r from-[#FF00D3] to-[#76E6FF] text-lg mb-3 ">Log in</button>
-              {responseMessage && <p className="text-green-600">{responseMessage}</p>}
               {error && <p className="text-red-600">{error}</p>}
             </div>
           </form>

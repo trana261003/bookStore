@@ -13,29 +13,60 @@ const Register = () => {
     state: '',
     country: ''
   });
+
+  const [errors, setErrors] = useState({});
   const [responseMessage, setResponseMessage] = useState('');
   const [error, setError] = useState('');
 
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({
+    setFormData((prevState) => ({
       ...prevState,
-      [name]: value
+      [name]: value,
     }));
+
+    if (value.trim() !== '') {
+      setErrors((prevState) => ({
+        ...prevState,
+        [name]: '',
+      }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    if (value.trim() === '') {
+      setErrors((prevState) => ({
+        ...prevState,
+        [name]: `${name.charAt(0).toUpperCase() + name.slice(1)} is required`,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const newErrors = {};
+    Object.keys(formData).forEach((key) => {
+      if (formData[key].trim() === '') {
+        newErrors[key] = `${key.charAt(0).toUpperCase() + key.slice(1)} is required`;
+      }
+    });
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:8080/api/users/register', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       });
 
       if (!response.ok) {
@@ -57,7 +88,6 @@ const Register = () => {
           state: '',
           country: ''
         });
-        // Redirect to the login page after a short delay to allow the user to see the success message
         setTimeout(() => {
           navigate('/login');
         }, 2000);
@@ -66,9 +96,12 @@ const Register = () => {
       }
     } catch (error) {
       console.error('Error registering user:', error);
-      setError('email already exist');
+      setError('Email already exists');
     }
   };
+
+  
+
 
   return (
     <div className="flex flex-wrap flex-col md:flex-row w-full mt-10 justify-center items-center">
@@ -84,30 +117,120 @@ const Register = () => {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 w-full">
-              <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none" required></input>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Name"
+                className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none"
+                required
+              />
+              {errors.name && <p className="text-red-600">{errors.name}</p>}
             </div>
             <div className="mb-4 w-full">
-              <input type="text" name="username" value={formData.username} onChange={handleChange} placeholder="Username" className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none" required></input>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Username"
+                className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none"
+                required
+              />
+              {errors.username && <p className="text-red-600">{errors.username}</p>}
             </div>
             <div className="mb-4 w-full">
-              <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none" required></input>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Email"
+                className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none"
+                required
+              />
+              {errors.email && <p className="text-red-600">{errors.email}</p>}
             </div>
             <div className="mb-4 w-full">
-              <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none" required></input>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Password"
+                className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none"
+                required
+              />
+              {errors.password && <p className="text-red-600">{errors.password}</p>}
             </div>
             <div className="mb-4 w-full">
-              <input type="text" name="contactNo" value={formData.contactNo} onChange={handleChange} placeholder="Contact No." className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none" required></input>
+              <input
+                type="text"
+                name="contactNo"
+                value={formData.contactNo}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                placeholder="Contact No."
+                className="text-black p-1 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 text-base font-medium border-b-2 border-slate-400 w-96 outline-none"
+                required
+              />
+              {errors.contactNo && <p className="text-red-600">{errors.contactNo}</p>}
             </div>
             <div className="mb-4 w-full">
               <div className="flex justify-between">
-                <input type="number" name="age" value={formData.age} onChange={handleChange} placeholder="Age" className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none" required></input>
-                <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none" required></input>
+                <input
+                  type="number"
+                  name="age"
+                  value={formData.age}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Age"
+                  className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none"
+                  required
+                />
+                
+                <input
+                  type="text"
+                  name="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="City"
+                  className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none"
+                  required
+                />
+                
               </div>
             </div>
             <div className="mb-4 w-full">
               <div className="flex justify-between">
-                <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none" required></input>
-                <input type="text" name="country" value={formData.country} onChange={handleChange} placeholder="Country" className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none" required></input>
+                <input
+                  type="text"
+                  name="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="State"
+                  className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none"
+                  required
+                />
+                
+                <input
+                  type="text"
+                  name="country"
+                  value={formData.country}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  placeholder="Country"
+                  className="text-black p-1 w-5/12 placeholder-black placeholder-opacity-100 cursor-pointer hover:opacity-75 font-medium border-b-2 border-slate-400 inline-block outline-none"
+                  required
+                />
+                
               </div>
             </div>
             <div className="flex flex-wrap flex-col w-full">
