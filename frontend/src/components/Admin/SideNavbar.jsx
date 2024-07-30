@@ -12,7 +12,7 @@ const SideNavbar = () => {
     { name: "Dashboard", link: "/admin", icon: MdSpaceDashboard },
     { name: "Upload Books", link: "/admin/upload", icon: GrCloudUpload },
     { name: "Manage Books", link: "/admin/manage", icon: MdOutlineManageHistory },
-    { name: "Users", link: "/admin/users", icon: FaUsers },
+    { name: "Orders", link: "/admin/orderhistory", icon: FaUsers },
     { name: "Logout", link: "/", icon: BiLogOutCircle },
   ];
 

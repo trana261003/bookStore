@@ -1,59 +1,174 @@
+// const jwt = require('jsonwebtoken');
+// const { Review, validateReview } = require('../models/ReviewsModel');
+// const UserModel = require('../models/UserModel');
+// const BookModel = require('../models/BookModel');
+// require('dotenv').config();
+
+// const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
+
+// const addReview = async (req, res) => {
+//     // Get the JWT token from cookies
+//     const token = authHeader.split(' ')[1];
+//     const decoded = jwt.verify(token, JWT_SECRET_KEY);
+//     // const userUuid = decoded.id;
+//     console.log(userUuid)
+//     const { bookUuid, quantity } = req.body;
+//     const book = await BookModel.findOne({ uuid: bookUuid });
+//     if (!token) {
+//         return res.status(401).json({ message: 'No token provided', error: true });
+//     }
+
+//     // Decode the token to get userUuid
+//     let userUuid;
+//     try {
+//         const decoded = jwt.verify(token, JWT_SECRET_KEY);
+//         userUuid = decoded.id; // Assuming 'id' is used as userUuid in the token
+//     } catch (error) {
+//         return res.status(401).json({ message: 'Invalid token', error: true });
+//     }
+
+//     // Validate request body
+//     const { error } = validateReview(req.body);
+//     if (error) {
+//         return res.status(400).json({
+//             message: "Validation errors",
+//             errors: error.details,
+//             error: true
+//         });
+//     }
+
+//     try {
+//         const { bookId, rating, comment } = req.body;
+
+//         // Find the user by userUuid
+//         const user = await UserModel.findOne({ uuid: userUuid });
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found', error: true });
+//         }
+
+//         // Find the book by bookId
+//         const book = await BookModel.findOne({ uuid: bookId });
+//         if (!book) {
+//             return res.status(404).json({ message: 'Book not found', error: true });
+//         }
+
+//         // Create and save the new review
+//         const review = new Review({ userId: userUuid, bookId, rating, comment });
+//         await review.save();
+
+//         res.status(200).json({ message: 'Review added successfully', review });
+//     } catch (error) {
+//         res.status(500).json({ message: 'An error occurred', error });
+//     }
+// };
+
+// module.exports = addReview;
+
+
+
+// const jwt = require('jsonwebtoken');
+// const { Review, validateReview } = require('../models/ReviewsModel');
+// const UserModel = require('../models/UserModel');
+// const BookModel = require('../models/BookModel');
+// require('dotenv').config();
+
+// const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
+
+// const addReview = async (req, res) => {
+//     // Get the JWT token from cookies
+//     const token = req.cookies.token;
+//     if (!token) {
+//         return res.status(401).json({ message: 'No token provided', error: true });
+//     }
+
+//     // Decode the token to get userUuid
+//     let userUuid;
+//     try {
+//         const decoded = jwt.verify(token, JWT_SECRET_KEY);
+//         userUuid = decoded.id; // Assuming 'id' is used as userUuid in the token
+//     } catch (error) {
+//         return res.status(401).json({ message: 'Invalid token', error: true });
+//     }
+
+//     // Validate request body
+//     const { error } = validateReview(req.body);
+//     if (error) {
+//         return res.status(400).json({
+//             message: "Validation errors",
+//             errors: error.details,
+//             error: true
+//         });
+//     }
+
+//     try {
+//         const { bookId, rating, comment } = req.body;
+
+//         // Find the user by userUuid
+//         const user = await UserModel.findOne({ uuid: userUuid });
+//         if (!user) {
+//             return res.status(404).json({ message: 'User not found', error: true });
+//         }
+
+//         // Find the book by bookId
+//         const book = await BookModel.findOne({ uuid: bookId });
+//         if (!book) {
+//             return res.status(404).json({ message: 'Book not found', error: true });
+//         }
+
+//         // Create and save the new review
+//         const review = new Review({ userId: userUuid, bookId, rating, comment });
+//         await review.save();
+
+//         res.status(200).json({ message: 'Review added successfully', review });
+//     } catch (error) {
+//         res.status(500).json({ message: 'An error occurred', error });
+//     }
+// };
+
+// module.exports = addReview;
+
+
 const jwt = require('jsonwebtoken');
-const { Review, validateReview } = require('../models/ReviewsModel');
+const { Review } = require('../models/ReviewsModel');
 const UserModel = require('../models/UserModel');
 const BookModel = require('../models/BookModel');
+const Joi = require('joi');
 require('dotenv').config();
 
 const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
 
 const addReview = async (req, res) => {
-    // Get the JWT token from cookies
-    const token = authHeader.split(' ')[1];
-    const decoded = jwt.verify(token, JWT_SECRET_KEY);
-    // const userUuid = decoded.id;
-    console.log(userUuid)
-    const { bookUuid, quantity } = req.body;
-    const book = await BookModel.findOne({ uuid: bookUuid });
-    if (!token) {
-        return res.status(401).json({ message: 'No token provided', error: true });
-    }
+    const schema = Joi.object({
+        bookUuid: Joi.string().required(),
+        rating: Joi.number().min(1).max(5).required(),
+        comment: Joi.string().required()
+    });
 
-    // Decode the token to get userUuid
-    let userUuid;
-    try {
-        const decoded = jwt.verify(token, JWT_SECRET_KEY);
-        userUuid = decoded.id; // Assuming 'id' is used as userUuid in the token
-    } catch (error) {
-        return res.status(401).json({ message: 'Invalid token', error: true });
-    }
-
-    // Validate request body
-    const { error } = validateReview(req.body);
+    const { error } = schema.validate(req.body);
     if (error) {
-        return res.status(400).json({
-            message: "Validation errors",
-            errors: error.details,
-            error: true
-        });
+        return res.status(400).json({ message: "Validation errors", errors: error.details, error: true });
     }
 
     try {
-        const { bookId, rating, comment } = req.body;
-
-        // Find the user by userUuid
-        const user = await UserModel.findOne({ uuid: userUuid });
-        if (!user) {
-            return res.status(404).json({ message: 'User not found', error: true });
+        const authHeader = req.headers.authorization;
+        if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            return res.status(401).json({ message: 'No token provided', error: true });
         }
 
-        // Find the book by bookId
-        const book = await BookModel.findOne({ uuid: bookId });
-        if (!book) {
-            return res.status(404).json({ message: 'Book not found', error: true });
-        }
+        const token = authHeader.split(' ')[1];
+        console.log('token',token);
+        const decoded = jwt.verify(token, JWT_SECRET_KEY);
+        const userUuid = decoded.id;
 
-        // Create and save the new review
-        const review = new Review({ userId: userUuid, bookId, rating, comment });
+        const { bookUuid, rating, comment } = req.body;
+
+        const review = new Review({
+            useruuid: userUuid,
+            bookuuid: bookUuid,
+            rating,
+            comment
+        });
+
         await review.save();
 
         res.status(200).json({ message: 'Review added successfully', review });

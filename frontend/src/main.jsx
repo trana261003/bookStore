@@ -26,6 +26,7 @@ import OrderHistory from './components/order/order.jsx'
 import UsersList from './components/Admin/Users.jsx'
 import Contact from './components/contact_us/contact.jsx'
 import Contact1 from './components/contact_us/contact1.jsx'
+import AdminOrderHistory from './components/Admin/Users.jsx'
 // import OrderHistory from './components/profile/userorderhistory.jsx'
 
 
@@ -130,8 +131,8 @@ const router = createBrowserRouter(
         loader: ({ params }) => fetch(`http://localhost:8080/api/admin/updatebook/:${params.uuid}`)
       },
       {
-        path: "/admin/users",
-        element: <UsersList/>
+        path: "/admin/orderhistory",
+        element: <AdminOrderHistory/>
       },
 
 

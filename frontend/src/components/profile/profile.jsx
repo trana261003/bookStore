@@ -5,7 +5,7 @@ import OrderHistory from '../order/order';
 import { Link } from 'react-router-dom';
 import { FaUser, FaHistory } from 'react-icons/fa';
 import { HiMenuAlt3 } from 'react-icons/hi';
-import { RiLogoutCircleLine } from "react-icons/ri";
+// import { RiLogoutCircleLine } from "react-icons/ri";
 import { GiReturnArrow } from "react-icons/gi";
 
 const Profile = () => {
@@ -135,12 +135,12 @@ const Profile = () => {
               </button>
             </Link>
             {/* </Link> */}
-            <Link to="/">
+            {/* <Link to="/">
               <button className="flex items-center p-3 rounded-full text-lg font-semibold bg-gray-800 hover:bg-gray-700 transition-transform duration-300 w-full text-left">
                 <RiLogoutCircleLine className={`text-xl ${isSidebarOpen ? 'mr-3' : ''}`} />
                 {isSidebarOpen && <span>Logout</span>}
               </button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>
