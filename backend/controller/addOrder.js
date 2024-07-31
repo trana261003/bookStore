@@ -6,69 +6,6 @@
 // const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
 
 // const addOrder = async (req, res) => {
-//   const schema = Joi.object({
-//     orderItems: Joi.array().items(
-//       Joi.object({
-//         bookUuid: Joi.string().uuid().required(),
-//         quantity: Joi.number().min(1).required(),
-//         price: Joi.number().min(0).required()
-//       })
-//     ).required(),
-//     totalPrice: Joi.number().min(0).required(),
-//     shippingAddress: Joi.string().required(),
-//     orderStatus: Joi.string().valid('pending', 'shipped', 'delivered', 'cancelled').default('pending'),
-//     paymentStatus: Joi.string().valid('paid', 'unpaid').default('unpaid')
-//   });
-
-//   const { error } = schema.validate(req.body);
-//   if (error) {
-//     return res.status(400).json({
-//       message: "Validation errors",
-//       errors: error.details,
-//       error: true
-//     });
-//   }
-
-//   try {
-//     const token = req.cookies.token;
-//     if (!token) {
-//       return res.status(401).json({ message: 'No token provided', error: true });
-//     }
-
-//     const decoded = jwt.verify(token, JWT_SECRET_KEY);
-//     const userUuid = decoded.id;
-
-//     const { orderItems, totalPrice, shippingAddress, orderStatus, paymentStatus } = req.body;
-
-//     const order = new Order({
-//       userUuid,
-//       orderItems,
-//       totalPrice,
-//       shippingAddress,
-//       orderStatus,
-//       paymentStatus
-//     });
-
-//     await order.save();
-//     res.status(200).json({ message: 'Order added successfully', order });
-//   } catch (error) {
-//     res.status(500).json({ message: 'An error occurred', error });
-//   }
-// };
-
-// module.exports = addOrder;
-
-
-
-
-// const jwt = require('jsonwebtoken');
-// const Order = require('../models/OrderModel');
-// const Joi = require('joi');
-// require('dotenv').config();
-
-// const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
-
-// const addOrder = async (req, res) => {
    
 //   try {
 //     // Get the token from the Authorization header
@@ -113,15 +50,16 @@
 
 
 
+
 const jwt = require('jsonwebtoken');
 const Order = require('../models/OrderModel');
-const Joi = require('joi');
+const ShoppingCart = require('../models/ShopingCartModel');
+const BookModel = require('../models/BookModel');
 require('dotenv').config();
 
 const JWT_SECRET_KEY = process.env.JWT_SECREAT_KEY;
 
 const addOrder = async (req, res) => {
-   
   try {
     // Get the token from the Authorization header
     const authHeader = req.headers.authorization;
@@ -130,13 +68,25 @@ const addOrder = async (req, res) => {
     }
 
     const token = authHeader.split(' ')[1];
-    console.log(token)
     // Verify the token and extract user UUID
     const decoded = jwt.verify(token, JWT_SECRET_KEY);
     const userUuid = decoded.id;
-    console.log(userUuid)
+
     // Destructure the validated request body
     const { orderItems, totalPrice, shippingAddress, orderStatus, paymentStatus } = req.body;
+
+    // Reduce the quantity of books in the order from the original stock
+    for (const item of orderItems) {
+      const book = await BookModel.findOne({ uuid: item.bookUuid });
+      if (!book) {
+        return res.status(404).json({ message: `Book with UUID ${item.bookUuid} not found`, error: true });
+      }
+      if (book.quantity < item.quantity) {
+        return res.status(400).json({ message: `Insufficient stock for book with UUID ${item.bookUuid}`, error: true });
+      }
+      book.quantity -= item.quantity;
+      await book.save();
+    }
 
     // Create a new order document
     const order = new Order({
@@ -150,6 +100,14 @@ const addOrder = async (req, res) => {
 
     // Save the order to the database
     await order.save();
+
+    // Empty the user's shopping cart
+    const cart = await ShoppingCart.findOne({ userUuid });
+    if (cart) {
+      cart.cartItems = [];
+      await cart.save();
+    }
+
     res.status(201).json({ message: 'Order added successfully', order });
   } catch (error) {
     if (error.name === 'JsonWebTokenError') {

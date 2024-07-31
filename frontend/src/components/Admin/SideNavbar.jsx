@@ -3,7 +3,8 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { MdSpaceDashboard } from "react-icons/md";
 import { GrCloudUpload } from "react-icons/gr";
 import { BiLogOutCircle } from "react-icons/bi";
-import { MdOutlineManageHistory } from "react-icons/md";
+import { RiMenuSearchLine } from "react-icons/ri";
+import { BsBoxSeamFill } from "react-icons/bs";
 import { FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -11,10 +12,17 @@ const SideNavbar = () => {
   const menus = [
     { name: "Dashboard", link: "/admin", icon: MdSpaceDashboard },
     { name: "Upload Books", link: "/admin/upload", icon: GrCloudUpload },
-    { name: "Manage Books", link: "/admin/manage", icon: MdOutlineManageHistory },
-    { name: "Orders", link: "/admin/orderhistory", icon: FaUsers },
+    { name: "Manage Books", link: "/admin/manage", icon: RiMenuSearchLine },
+    { name: "Orders", link: "/admin/orderhistory", icon: BsBoxSeamFill },
+    { name: "Users", link: "/admin/users", icon: FaUsers },
     { name: "Logout", link: "/", icon: BiLogOutCircle },
   ];
+
+  // const logout = () => {
+  //   localStorage.clear();
+  //   const auth = getAuth();
+  //   auth.signOut();
+  // };
 
   const [open, setOpen] = useState(false);
 

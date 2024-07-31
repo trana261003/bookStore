@@ -9,6 +9,7 @@ const UpdateBook = async (req, res) => {
     genre: Joi.string().optional(),
     description: Joi.string().optional(),
     price: Joi.number().optional().messages({ 'number.base': 'Price must be a number.' }),
+    quantity:Joi.number().required().min(1).messages({'number.base':"quantity must be a number",'any.required':'Price is required'}),
     pdfUrl: Joi.string().uri().optional().messages({ 'string.uri': 'PDF URL must be a valid URL.' }),
     available: Joi.boolean().optional()
   });

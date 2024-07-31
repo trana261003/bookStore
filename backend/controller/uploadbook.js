@@ -11,6 +11,7 @@ const uploadBook = async (req, res) => {
         genre: Joi.string().required().messages({ 'string.empty': 'Genre is required.' }),
         description: Joi.string().required().messages({ 'string.empty': 'Description is required.' }),
         price: Joi.number().required().messages({ 'number.base': 'Price must be a number.', 'any.required': 'Price is required.' }),
+        quantity:Joi.number().required().min(1).messages({'number.base':"quantity must be a number",'any.required':'Price is required'}),
         pdfUrl: Joi.string().uri().required().messages({ 'string.uri': 'PDF URL must be a valid URL.', 'any.required': 'PDF URL is required.' }),
         available: Joi.boolean().default(true)
     });
@@ -25,7 +26,7 @@ const uploadBook = async (req, res) => {
     }
 
     try {
-        const { title, author, coverImage, genre, description, price, pdfUrl, available } = req.body;
+        const { title, author, coverImage, genre, description, price, quantity , pdfUrl, available } = req.body;
 
         const newBook = new BookModel({
             uuid: uuidv4(),
@@ -35,6 +36,7 @@ const uploadBook = async (req, res) => {
             genre,
             description,
             price,
+            quantity,
             pdfUrl,
             available
         });

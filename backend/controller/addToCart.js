@@ -44,7 +44,7 @@ const addToCart = async (req, res) => {
     if (existingCartItem) {
       existingCartItem.quantity += quantity;
     } else {
-      cart.cartItems.push({ bookUuid,title:book.title,coverImage:book.coverImage, quantity, price: book.price });
+      cart.cartItems.push({ bookUuid,title:book.title,coverImage:book.coverImage, author:book.author , quantity, price: book.price });
     }
 
     await cart.save();
