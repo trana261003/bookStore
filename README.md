@@ -1,6 +1,6 @@
 # Bookstore Management Web Application
 
-Welcome to the Bookstore Management Web Application! This project aims to enhance business operations by providing a robust and user-friendly web application for managing an online bookstore using the MERN stack.
+Welcome to the Bookstore Management Web Application Service Based Project! This project aims to enhance business operations by providing a robust and user-friendly web application for managing an online bookstore using the MERN stack.
 
 ## Features
 
@@ -30,7 +30,7 @@ Welcome to the Bookstore Management Web Application! This project aims to enhanc
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/bookstore-management.git
+   git clone https://github.com/trana261003/bookStore.git
    cd bookstore-management
    ```
 
@@ -99,8 +99,8 @@ We welcome contributions to enhance the project. Please follow these steps to co
 
 2. **Clone the Forked Repository**:
    ```bash
-   git clone https://github.com/your-username/bookstore-management.git
-   cd bookstore-management
+   git clone  https://github.com/trana261003/bookStore.git
+   cd bookstore
    ```
 
 3. **Create a New Branch**:
