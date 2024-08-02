@@ -76,7 +76,7 @@ Welcome to the Bookstore Management Web Application Service Based Project! This 
 ## Usage
 
 1. **Access the Web Application**:
-   Open your browser and go to `http://localhost:3000`.
+   Open your browser and go to `http://localhost:5173`.
 
 2. **Login/Register**:
    Register a new account or log in with your existing credentials.
