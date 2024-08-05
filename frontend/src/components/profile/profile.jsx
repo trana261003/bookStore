@@ -161,7 +161,7 @@ const Profile = () => {
                 </div>
               </div>
               <div className="bg-gray-200 p-4 rounded-lg text-black shadow-lg">
-                <p><strong>Role:</strong> {userInfo.role}</p>
+                <p><strong>Role:</strong> user</p>
               </div>
               <div className="bg-gray-200 p-4 rounded-lg text-black shadow-lg">
                 <p><strong>City:</strong> {userInfo.city}</p>

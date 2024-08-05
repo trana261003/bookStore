@@ -146,7 +146,7 @@ function Book1() {
                     <img
                       src={book.coverImage}
                       alt={book.title}
-                      className="h-52 w-32"
+                      className="h-52 w-32 rounded-r-xl"
                     />
                     <div className="p-4 flex-1">
                       <h5 className="text-2xl font-bold text-gray-900 mb-2">
