@@ -50,8 +50,9 @@ Welcome to the Bookstore Management Web Application Service Based Project! This 
    Create a `.env` file in the backend directory and add your environment variables:
    ```plaintext
    PORT=5000
+   FRONTEND_URL=your_frontend_url
    MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret_key
+   JWT_SECRET_KEY=your_jwt_secret_key
    ```
 
 5. **Run the Application**:
